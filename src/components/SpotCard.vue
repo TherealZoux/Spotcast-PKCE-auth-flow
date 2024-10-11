@@ -36,6 +36,6 @@ const props = defineProps([
 }
 .card:hover {
   cursor: pointer;
-  background: rgba(179, 179, 179, 0.3);
+  background: rgba(30, 30, 30, 0.3);
 }
 </style>

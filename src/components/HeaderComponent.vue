@@ -2,9 +2,11 @@
   <header
     class="flex flex-col lg:flex-row items-center fixed w-full bg-[#121212] z-10 justify-between whitespace-nowrap border-b border-solid border-b-[#292929] px-10 py-3"
   >
-    <div class="flex flex-col lg:flex-row items-center lg:w-[40%] w-full  gap-4 lg:gap-16">
+    <div
+      class="flex flex-col lg:flex-row items-center lg:w-[40%] w-full gap-4 lg:gap-16"
+    >
       <div
-        class="flex items-center justify-between w-full md:w-full gap-4  text-[#FFFFFF]"
+        class="flex items-center justify-between w-full md:w-full gap-4 text-[#FFFFFF]"
       >
         <div class="flex items-center w-full gap-3">
           <div class="size-4">
@@ -24,7 +26,7 @@
           </div>
           <router-link
             to="/"
-            class=" logo text-header-color text-3xl font-bold leading-tight tracking-[-0.015em]"
+            class="logo text-header-color text-3xl font-bold leading-tight tracking-[-0.015em]"
           >
             Spodcast
           </router-link>
@@ -35,17 +37,16 @@
         </v-btn>
       </div>
       <Transition name="fade">
-        <div class="flex items-center gap-8 md:absolute lg:left-[20%] lg:gap-9" v-if="menu">
+        <div
+          class="flex items-center gap-8 md:absolute lg:left-[20%] lg:gap-9"
+          v-if="menu"
+        >
           <router-link
             to="/dashboard"
-            class="text-header-color opacity-75  text-lg font-medium leading-normal"
+            class="text-header-color opacity-75 text-lg font-medium leading-normal"
             >Dashbord</router-link
           >
-          <router-link
-            to="/favorite"
-            class="text-header-color line-through opacity-75 text-lg font-medium leading-normal"
-            >My list</router-link
-          >
+
           <router-link
             to="/"
             class="text-header-color text-lg font-medium opacity-75 leading-normal"
@@ -87,10 +88,9 @@
         </label>
         <div
           class="bg-center bg-[#252525] flex items-center justify-center rounded-full size-10"
-
-          v-if="profile.id"
         >
-          <img  :src="profile.images[1].url" class="size-8 rounded-full"/>
+          <img :src="profile?.images?.[0]?.url || 'https://img.icons8.com/?size=100&id=kDoeg22e5jUY&format=png&color=000000'" alt="Profile Image" class="w-[2rem] h-[2rem] rounded-[22rem]" />
+          
         </div>
       </div>
     </Transition>
@@ -99,19 +99,29 @@
 
 <script setup>
 import { RouterLink } from "vue-router";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
+
 const screen = ref(window.innerWidth < 1024 ? true : false);
 const menu = ref(!screen.value);
+
 const query = ref("");
-const profile = computed(()=> store.getters.profile)
+
+
 const onInput = () => {
   store.dispatch("setSearchQuery", query.value);
+
 };
 
+onMounted(() => {
+  if (!profile.value) {
+    store.dispatch('fetchProfile');
+  }
+});
 
+const  profile = computed( () => store.getters.profile);
 </script>
 <style>
 input:focus {
@@ -135,13 +145,13 @@ a::after {
   transition: transform 0.3s ease-in-out;
 }
 
-.logo{
-position: relative;
+.logo {
+  position: relative;
 }
 .logo::after {
   content: "";
   position: absolute;
-  left: 100% ;
+  left: 100%;
   top: 100%;
   width: 0;
   height: 0 !important;
@@ -150,7 +160,6 @@ position: relative;
   transform-origin: bottom left;
   transition: transform 0.3s ease-in-out;
 }
-
 
 /* Active link */
 .active-link::after {

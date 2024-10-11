@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "@/store";
 import { getRefreshToken } from "./AuthService.js";
 
-const accessToken = localStorage.getItem("access_token");
+//const accessToken = localStorage.getItem("access_token");
 
 export async function fetchcasts() {
   const url = "https://api.spotify.com/v1/shows"; // Spotify API endpoint for shows
@@ -64,7 +64,6 @@ export async function fetchcasts() {
   } catch (error) {
     console.error("Error fetching podcasts:", error);
     getRefreshToken();
-
   }
 }
 
@@ -80,7 +79,7 @@ export const fetchEpisodes = async (showId) => {
     return response.data;
   } catch (error) {
     console.log("Error fetching episodes", error);
-    if (localStorage.getItem("refresh_token") !== undefined) {
+    if (localStorage.getItem("refresh_token") === undefined) {
       getRefreshToken();
     } else {
       localStorage.clear();
@@ -93,7 +92,7 @@ export const fetchProfile = async () => {
   try {
     const response = await axios.get(url, {
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
       },
     });
     return response.data;
@@ -101,17 +100,32 @@ export const fetchProfile = async () => {
     getRefreshToken();
   }
 };
+
+export const fetchSaved = async () => {
+  const url = "https://api.spotify.com/v1/me/episodes";
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error.data)
+    getRefreshToken();
+  }
+};
+
 export const getTopItems = async (endPoint) => {
   const url = endPoint;
   try {
     const response = await axios.get(url, {
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
       },
     });
     return response.data;
   } catch (error) {
     getRefreshToken();
-
   }
 };

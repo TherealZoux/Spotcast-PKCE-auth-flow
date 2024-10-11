@@ -5,6 +5,7 @@ import {
   fetchEpisodes,
   fetchProfile,
   getTopItems,
+  fetchSaved,
 } from "@/services/SpotifyService";
 
 export default createStore({
@@ -12,7 +13,8 @@ export default createStore({
     shows: [],
     episodes: [],
     profile: {},
-    artists: {},
+    saved: [],
+    artists: [],
     topShows: [],
     playlists: [],
     loading: true,
@@ -49,6 +51,9 @@ export default createStore({
     SET_PLAYLISTS(state, data) {
       state.playlists = data;
     },
+    SET_SAVED(state, data) {
+      state.saved = data;
+    },
   },
 
   actions: {
@@ -57,7 +62,8 @@ export default createStore({
       try {
         if (localStorage.getItem("access_token")) {
           const data = await fetchcasts();
-          commit("SET_SHOWS", data);
+          const filteredData = data.filter( item => item != null)
+          commit("SET_SHOWS", filteredData);
           commit("SET_LOADING", false);
         } else {
           commit("SET_LOADING", false); // Handle the case where there's no token
@@ -75,6 +81,7 @@ export default createStore({
         commit("SET_LOADING", false);
       } catch (error) {
         console.error("Error fetching episodes:", error);
+        commit("SET_LOADING", false);
       }
     },
     filterShows({ commit, state }) {
@@ -88,25 +95,69 @@ export default createStore({
       dispatch("filterShows");
     },
     async userProfile({ commit }) {
-      commit("SET_LOADING", true);
+      commit("SET_LOADING", false);
       try {
         const profile = await fetchProfile();
-        const artists = await getTopItems(
-          "https://api.spotify.com/v1/me/following?type=artist",
-        );
-        const topShows = await getTopItems(
-          "https://api.spotify.com/v1/me/top/tracks",
-        );
-        const playlists = await getTopItems(
-          "https://api.spotify.com/v1/me/playlists",
-        );
         commit("SET_PROFILE", profile);
-        commit("SET_TOP_SHOWS", topShows.items);
-        commit("SET_PLAYLISTS", playlists.items);
-        commit("SET_ARTISTS", artists.artists.items);
         commit("SET_LOADING", false);
       } catch (error) {
         console.error("Error fetching Profile:", error);
+        commit("SET_LOADING", false);
+      } finally {
+        commit("SET_LOADING", false);
+      }
+    },
+    async userSaved({ commit }) {
+      commit("SET_LOADING", false);
+      try {
+        const saved = await fetchSaved();
+        commit("SET_SAVED", saved);
+        commit("SET_LOADING", false);
+      } catch (error) {
+        console.error("Error fetching Profile:", error);
+        commit("SET_LOADING", false);
+      } finally {
+        commit("SET_LOADING", false);
+      }
+    },
+
+    async getFollowing({ commit }) {
+      commit("SET_LOADING", true);
+      try {
+        const artists = await getTopItems(
+          "https://api.spotify.com/v1/me/following?type=artist",
+        );
+        commit("SET_ARTISTS", artists.artists.items);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("SET_LOADING", false);
+      }
+    },
+    async fetchPlaylists({ commit }) {
+      commit("SET_LOADING", true);
+      try {
+        const playlists = await getTopItems(
+          "https://api.spotify.com/v1/me/playlists?limit=10",
+        );
+        commit("SET_PLAYLISTS", playlists.items);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("SET_LOADING", false);
+      }
+    },
+    async fetchTopShows({ commit }) {
+      commit("SET_LOADING", true);
+      try {
+        const topShows = await getTopItems(
+          "https://api.spotify.com/v1/me/top/tracks?limit=10",
+        );
+        commit("SET_TOP_SHOWS", topShows.items);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("SET_LOADING", false);
       }
     },
   },
@@ -118,6 +169,7 @@ export default createStore({
     searchQuery: (state) => state.searchQuery,
     filteredShows: (state) => state.filteredShows,
     profile: (state) => state.profile,
+    saved: (state) => state.saved,
     artists: (state) => state.artists,
     topShows: (state) => state.topShows,
     playlists: (state) => state.playlists,

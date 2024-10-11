@@ -1,21 +1,22 @@
+
 <template>
   <section
     class="flex items-center justify-center bg-[#121212] p-4 rounded-2xl"
   >
-    <ul class="w-full flex flex-wrap gap-4 w-full" v-if="shows.length > 0">
+    <ul class="w-full flex flex-wrap gap-4 w-full" v-if="saved.total > 0">
       <showComponent
-        v-for="show in shows"
-        :showImg="show.album.images[0].url"
-        :showName="show.name"
-        :showArtist="show.artists[0].name"
-        :showUrl="show.external_urls.spotify"
+        v-for="i in saved.items"
+        :showImg="i.episode.images[2].url"
+        :showName="i.episode.name"
+        :showArtist="i.episode.show.name"
+        :showUrl="i.episode.external_urls.spotify"
       />
     </ul>
     <div
       class="bg-[#1a1a1a] w-[20rem] p-4 rounded text-[#8c8c8c] mr-20 "
       v-else
     >
-      <p>Your top shows will appear here</p>
+      <p>Your saved episodes will appear here</p>
     </div>
   </section>
 </template>
@@ -25,8 +26,9 @@ import { computed, onMounted} from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const shows = computed(() => store.getters.topShows);
+const saved = computed(() => store.getters.saved);
 const loading = computed(() => store.getters.isLoading);
 
-onMounted(() => {store.dispatch("fetchTopShows")})
+onMounted(() => {store.dispatch("userSaved")})
 </script>
+

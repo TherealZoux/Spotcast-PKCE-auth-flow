@@ -9,6 +9,7 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: () => import('@/views/LoginView.vue'),
+      meta: { transition: 'slide-right' },
     },
     {
       path: "/",
@@ -25,12 +26,7 @@ const router = createRouter({
       path: "/dashboard",
       name: "Dashboard",
       component: () => import('@/views/DashboardView.vue'),
-
-    },
-    {
-      path: "/favorite",
-      name: "favorite",
-      component: () => import('@/views/favoriteView.vue'),
+      meta: { transition: 'slide-left' },
     },
     {
       path: "/show/:id",
