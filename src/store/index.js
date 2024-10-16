@@ -95,7 +95,7 @@ export default createStore({
       dispatch("filterShows");
     },
     async userProfile({ commit }) {
-      commit("SET_LOADING", false);
+      commit("SET_LOADING", true);
       try {
         const profile = await fetchProfile();
         commit("SET_PROFILE", profile);
@@ -108,7 +108,7 @@ export default createStore({
       }
     },
     async userSaved({ commit }) {
-      commit("SET_LOADING", false);
+      commit("SET_LOADING", true);
       try {
         const saved = await fetchSaved();
         commit("SET_SAVED", saved);

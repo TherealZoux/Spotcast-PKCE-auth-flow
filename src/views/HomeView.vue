@@ -38,7 +38,7 @@ if (localStorage.getItem("refresh_token") === undefined) {
   </div>
 
   <div v-if="loading" class="flex justify-center items-center m-20">
-    <loadingComponent />
+    <LoadingComponent />
   </div>
   <section class="w-full pt-4" v-else>
     <h1 class="text-4xl font-bold text-center m-8">

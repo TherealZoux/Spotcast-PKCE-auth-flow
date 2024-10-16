@@ -1,6 +1,6 @@
 <template>
   <li class=" ">
-    <a class="flex gap-4 w-[12rem] h-[4rem] items-center bg-[#121212 relative" :href="showUrl">
+    <a class="flex show gap-4 w-[14rem] h-[4rem] items-center  relative" :href="showUrl">
       <img :src="showImg" class="w-[4rem] h-[4rem]" />
       <div>
         <h1 class="h-[1.5rem] overflow-hidden">{{ showName }}</h1>
@@ -19,3 +19,9 @@ const props = defineProps([
   "showUrl",
 ]);
 </script>
+
+<style lang="css">
+.show:hover{
+  background: #37ea9fab;
+}
+</style>

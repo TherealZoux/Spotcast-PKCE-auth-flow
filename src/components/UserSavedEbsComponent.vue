@@ -1,7 +1,7 @@
 
 <template>
   <section
-    class="flex items-center justify-center bg-[#121212] p-4 rounded-2xl"
+    class="flex items-center justify-center bg-[#141414] p-4 rounded-2xl"
   >
     <ul class="w-full flex flex-wrap gap-4 w-full" v-if="saved.total > 0">
       <showComponent
@@ -27,8 +27,6 @@ import { useStore } from "vuex";
 
 const store = useStore();
 const saved = computed(() => store.getters.saved);
-const loading = computed(() => store.getters.isLoading);
-
 onMounted(() => {store.dispatch("userSaved")})
 </script>
 

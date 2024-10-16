@@ -4,7 +4,6 @@ import { useStore } from "vuex";
 
 const store = useStore();
 const artists = computed(() => store.getters.artists);
-const loading = computed(() => store.getters.isLoading);
 
 onMounted(() => {
   store.dispatch("getFollowing");
@@ -12,10 +11,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <loadingComponent v-if="loading" />
   <section
-    class="w-full flex max-h-[12rem] overflowww-hiddden flex-wrap items-center justify-center bg-[#121212] gap-4 p-4 rounded-2xl"
-    v-else
+    class="w-full flex max-h-[12rem] overflow-hidden flex-wrap items-center justify-center bg-[#141414] gap-4 p-4 rounded-2xl"
   >
     <a
       v-for="artist in artists"
