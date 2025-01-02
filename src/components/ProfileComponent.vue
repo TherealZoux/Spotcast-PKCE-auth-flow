@@ -1,19 +1,10 @@
 <template>
-  <div class="max-w-xs" v-if="user">
+  <div class="max-w-xs profile" v-if="user">
     <div class="bg-[#121212] shadow-xl rounded-lg py-3">
       <div class="photo-wrapper p-2">
-        <img
-          class="w-32 h-32 rounded-full mx-auto"
-          v-if="!user.images || user.images.length === 0"
-          src="https://img.icons8.com/?size=100&id=kDoeg22e5jUY&format=png&color=000000"
-          alt="Default user image"
-        />
-        <img
-          class="w-32 h-32 rounded-full mx-auto"
-          v-else
-          :src="user.images[1]?.url"
-          alt="User profile image"
-        />
+        <img class="w-32 h-32 rounded-full mx-auto" v-if="!user.images || user.images.length === 0"
+          src="https://img.icons8.com/?size=100&id=kDoeg22e5jUY&format=png&color=000000" alt="Default user image" />
+        <img class="w-32 h-32 rounded-full mx-auto" v-else :src="user.images[1]?.url" alt="User profile image" />
       </div>
       <div class="p-2">
         <h3 class="text-center text-xl font-medium leading-8">
@@ -45,12 +36,8 @@
           </tbody>
         </table>
         <div class="text-center my-3">
-          <a
-            class="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium"
-            :href="user.external_urls.spotify"
-            v-if="user.id"
-            >View Profile</a
-          >
+          <a class="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium"
+            :href="user.external_urls.spotify" v-if="user.id">View Profile</a>
         </div>
       </div>
     </div>
@@ -68,14 +55,22 @@ const store = useStore();
 const user = computed(() => store.getters.profile);
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .user-info-field {
   background: #1a1a1a;
   color: #8c8c8c;
   width: 80%
 }
-table, th, td {
+
+table,
+th,
+td {
   border: 6px solid #121212;
   border-collapse: collapse;
+}
+
+
+.profile {
+  box-shadow: 0px 0px 3px 0px rgba(29, 58, 145, 0.43);
 }
 </style>

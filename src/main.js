@@ -17,3 +17,7 @@ app.use(router);
 registerPlugins(app);
 
 app.mount("#app");
+
+
+
+

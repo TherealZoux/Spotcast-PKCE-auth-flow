@@ -9,28 +9,23 @@ const validPlaylists = computed(() =>
 );
 const loading = computed(() => store.getters.isLoading);
 
-onMounted(() => {store.dispatch("fetchPlaylists")})
+onMounted(() => { store.dispatch("fetchPlaylists") })
 </script>
 
 <template>
-  <section
-    class="flex items-center justify-center bg-[#141414] gap-4 p-4 rounded-2xl"
-  >
+  <section class="flex items-center justify-center bg-[#141414] gap-4 p-4 rounded-2xl">
     <ul class="flex flex-wrap gap-4 w-full" v-if="playlists.length > 0">
-      <showComponent
-        v-if="validPlaylists"
-        v-for="playlist in validPlaylists"
-        :showName="playlist.name"
-        :showImg="playlist.images[0].url"
-        :showArtist="playlist.owner.display_name"
-        :showUrl="playlist.external_urls.spotify"
-      />
+      <showComponent v-if="validPlaylists" v-for="playlist in validPlaylists" :showName="playlist.name"
+        :showImg="playlist.images[0].url" :showArtist="playlist.owner.display_name"
+        :showUrl="playlist.external_urls.spotify" />
     </ul>
-    <div
-      class="bg-[#1a1a1a] w-[20rem] p-4 rounded text-[#8c8c8c]"
-      v-else
-    >
+    <div class="bg-[#1a1a1a] w-[20rem] p-4 rounded text-[#8c8c8c]" v-else>
       <p>Your playlists will appear here</p>
     </div>
   </section>
 </template>
+<style lang="css" scoped>
+section {
+  box-shadow: 0px 0px 3px 0px rgba(29, 58, 145, 0.43);
+}
+</style>
