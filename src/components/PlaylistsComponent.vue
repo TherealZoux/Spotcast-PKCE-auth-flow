@@ -15,7 +15,7 @@ onMounted(() => { store.dispatch("fetchPlaylists") })
 <template>
   <section class="flex items-center justify-center bg-[#141414] gap-4 p-4 rounded-2xl">
     <ul class="flex flex-wrap gap-4 w-full" v-if="playlists.length > 0">
-      <showComponent v-if="validPlaylists" v-for="playlist in validPlaylists" :showName="playlist.name"
+      <ShowComponent v-if="validPlaylists" v-for="playlist in validPlaylists" :showName="playlist.name"
         :showImg="playlist.images[0].url" :showArtist="playlist.owner.display_name"
         :showUrl="playlist.external_urls.spotify" />
     </ul>

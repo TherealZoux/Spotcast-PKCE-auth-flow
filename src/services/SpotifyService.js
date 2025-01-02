@@ -101,8 +101,8 @@ export const fetchProfile = async () => {
   }
 };
 
-export const fetchSaved = async () => {
-  const url = "https://api.spotify.com/v1/me/episodes?offset=0&limit=10";
+export const getSaved = async (url) => {
+
   try {
     const response = await axios.get(url, {
       headers: {
@@ -129,3 +129,4 @@ export const getTopItems = async (endPoint) => {
     getRefreshToken();
   }
 };
+

@@ -1,7 +1,7 @@
 <template>
   <section class="flex items-center justify-center bg-[#141414] p-4 rounded-2xl">
-    <ul class="w-full flex flex-wrap gap-4" v-if="saved.total > 0">
-      <showComponent v-for="item in userSavedData" :showImg="item.episode?.images?.[0]?.url || defaultImage"
+    <ul class="w-full flex flex-wrap gap-4" v-if="savedEps.total > 0">
+      <ShowComponent v-for="item in episodesNullFiltered" :showImg="item.episode?.images?.[0]?.url || defaultImage"
         :showName="item.episode.name" :showArtist="item.episode.show.name"
         :showUrl="item.episode.external_urls.spotify" />
     </ul>
@@ -15,11 +15,13 @@
 import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import defaultImage from '../assets/2559779_media_network_social_spotify_icon.svg'
+
 const store = useStore();
-const saved = computed(() => store.getters.saved);
-const userSavedData = computed(() => saved.value.items.filter(item => item.episode.id != null));
-onMounted(() => { store.dispatch("userSaved") })
-console.log(userSavedData.value)
+const savedEps = computed(() => store.getters.savedEpisodes);
+const episodesNullFiltered = computed(() => savedEps.value.items.filter(item => item.episode.id != null));
+
+onMounted(() => { store.dispatch("savedEpisodes") })
+
 </script>
 <style lang="css" scoped>
 section {

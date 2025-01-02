@@ -1,7 +1,7 @@
 <template>
   <section class="flex items-center justify-center bg-[#141414] p-4 rounded-2xl">
     <ul class="w-full flex flex-wrap gap-4 " v-if="shows.length > 0">
-      <showComponent v-for="show in shows" :showImg="show.album.images[2].url" :showName="show.name"
+      <ShowComponent v-for="show in shows" :showImg="show.album.images[2].url" :showName="show.name"
         :showArtist="show.artists[0].name" :showUrl="show.external_urls.spotify" />
     </ul>
     <div class="bg-[#1a1a1a] w-[20rem] p-4 rounded text-[#8c8c8c] mr-20 " v-else>

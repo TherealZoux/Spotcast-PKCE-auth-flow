@@ -5,7 +5,7 @@ import {
   fetchEpisodes,
   fetchProfile,
   getTopItems,
-  fetchSaved,
+  getSaved,
 } from "@/services/SpotifyService";
 
 export default createStore({
@@ -13,7 +13,8 @@ export default createStore({
     shows: [],
     episodes: [],
     profile: {},
-    saved: [],
+    savedEpisodes: [],
+    savedShows: [],
     artists: [],
     topShows: [],
     playlists: [],
@@ -51,8 +52,11 @@ export default createStore({
     SET_PLAYLISTS(state, data) {
       state.playlists = data;
     },
-    SET_SAVED(state, data) {
-      state.saved = data;
+    SET_SAVED_EPS(state, data) {
+      state.savedEpisodes = data;
+    },
+    SET_SAVED_SHOWS(state, data) {
+      state.savedShows = data;
     },
   },
 
@@ -62,7 +66,7 @@ export default createStore({
       try {
         if (localStorage.getItem("access_token")) {
           const data = await fetchcasts();
-          const filteredData = data.filter( item => item != null)
+          const filteredData = data.filter(item => item != null)
           commit("SET_SHOWS", filteredData);
           commit("SET_LOADING", false);
         } else {
@@ -107,11 +111,11 @@ export default createStore({
         commit("SET_LOADING", false);
       }
     },
-    async userSaved({ commit }) {
+    async savedEpisodes({ commit }) {
       commit("SET_LOADING", true);
       try {
-        const saved = await fetchSaved();
-        commit("SET_SAVED", saved);
+        const savedEps = await getSaved("https://api.spotify.com/v1/me/episodes?offset=0&limit=10");
+        commit("SET_SAVED_EPS", savedEps);
         commit("SET_LOADING", false);
       } catch (error) {
         console.error("Error fetching Profile:", error);
@@ -120,6 +124,20 @@ export default createStore({
         commit("SET_LOADING", false);
       }
     },
+    async savedShows({ commit }) {
+      commit("SET_LOADING", true);
+      try {
+        const savedShows = await getSaved("https://api.spotify.com/v1/me/shows?offset=0&limit=10");
+        commit("SET_SAVED_SHOWS", savedShows);
+        commit("SET_LOADING", false);
+      } catch (error) {
+        console.error("Error fetching Profile:", error);
+        commit("SET_LOADING", false);
+      } finally {
+        commit("SET_LOADING", false);
+      }
+    },
+
 
     async getFollowing({ commit }) {
       commit("SET_LOADING", true);
@@ -169,7 +187,8 @@ export default createStore({
     searchQuery: (state) => state.searchQuery,
     filteredShows: (state) => state.filteredShows,
     profile: (state) => state.profile,
-    saved: (state) => state.saved,
+    savedEpisodes: (state) => state.savedEpisodes,
+    savedShows: (state) => state.savedShows,
     artists: (state) => state.artists,
     topShows: (state) => state.topShows,
     playlists: (state) => state.playlists,

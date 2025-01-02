@@ -25,15 +25,22 @@
             <h1 class="text-[1.5rem] bg-[#1a1a1a] top-1 p-2 rounded roboto-bold relative border-l-2 border-[#3498db]">
               Saved Episodes
             </h1>
-            <UserSavedEbsComponent class="mt-[1rem] pt-8" />
+            <UserSavedEpsComponent class="mt-[1rem] pt-8" />
           </div>
         </div>
-
-        <div class="w-full relative">
-          <h1 class="text-[1.5rem] bg-[#1a1a1a] top-1 p-2 rounded roboto-bold relative border-l-2 border-[#3498db]">
-            Playlists
-          </h1>
-          <PlaylistsComponent class="mt-[1rem] pt-8 md-w-[30%]" />
+        <div class="flex flex-col gap-1">
+          <div class="w-full relative">
+            <h1 class="text-[1.5rem] bg-[#1a1a1a] top-1 p-2 rounded roboto-bold relative border-l-2 border-[#3498db]">
+              Playlists
+            </h1>
+            <PlaylistsComponent class="mt-[1rem] pt-8 md-w-[30%]" />
+          </div>
+          <div class="w-full relative">
+            <h1 class="text-[1.5rem] bg-[#1a1a1a] top-1 p-2 rounded roboto-bold relative border-l-2 border-[#3498db]">
+              Following shows
+            </h1>
+            <UserSavedShowsComponent class="mt-[1rem] pt-8 md-w-[30%]" />
+          </div>
         </div>
       </section>
     </section>

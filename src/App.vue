@@ -1,10 +1,10 @@
-<template >
+<template>
   <v-app>
     <v-main class="flex flex-col justify-between">
       <HeaderComponent />
       <router-view> </router-view>
       <AppFooter />
-      
+
     </v-main>
   </v-app>
 </template>
@@ -27,7 +27,7 @@ span {
   color: rgb(133, 133, 133);
 }
 
-body{
+body {
   font-family: "Roboto", sans-serif;
 }
 
