@@ -4,7 +4,8 @@
       <div class="photo-wrapper p-2">
         <img class="w-32 h-32 rounded-full mx-auto" v-if="!user.images || user.images.length === 0"
           src="https://img.icons8.com/?size=100&id=kDoeg22e5jUY&format=png&color=000000" alt="Default user image" />
-        <img class="w-32 h-32 rounded-full mx-auto" v-else :src="user.images[1]?.url" alt="User profile image" />
+        <img class="w-32 h-32 rounded-full mx-auto" v-else :src="user?.images[0]?.url || '../assets/avatar.png'"
+          alt="User profile image" />
       </div>
       <div class="p-2">
         <h3 class="text-center text-xl font-medium leading-8">

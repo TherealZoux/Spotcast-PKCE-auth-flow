@@ -57,4 +57,9 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+main {
+  background-image: url("../assets/sssquiggly.svg");
+  background-size: cover;
+}
+</style>
