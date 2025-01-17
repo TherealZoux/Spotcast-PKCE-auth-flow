@@ -16,6 +16,7 @@ export default createStore({
     saved: [],
     artists: [],
     topShows: [],
+    followingShows: [],
     playlists: [],
     loading: true,
     searchQuery: "",
@@ -48,6 +49,10 @@ export default createStore({
     SET_TOP_SHOWS(state, data) {
       state.topShows = data;
     },
+    SET_FOLLOWING_SHOWS(state, data) {
+      state.followingShows = data;
+    },
+
     SET_PLAYLISTS(state, data) {
       state.playlists = data;
     },
@@ -62,7 +67,7 @@ export default createStore({
       try {
         if (localStorage.getItem("access_token")) {
           const data = await fetchcasts();
-          const filteredData = data.filter( item => item != null)
+          const filteredData = data.filter(item => item != null)
           commit("SET_SHOWS", filteredData);
           commit("SET_LOADING", false);
         } else {
@@ -134,6 +139,21 @@ export default createStore({
         commit("SET_LOADING", false);
       }
     },
+    async getFollowingShows({ commit }) {
+      commit("SET_LOADING", true);
+      try {
+        const followingShows = await getTopItems(
+          "https://api.spotify.com/v1/me/shows?limit=10",
+        );
+        console.log(followingShows.items)
+        commit("SET_FOLLOWING_SHOWS", followingShows.items);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("SET_LOADING", false);
+      }
+    },
+
     async fetchPlaylists({ commit }) {
       commit("SET_LOADING", true);
       try {
@@ -170,6 +190,7 @@ export default createStore({
     filteredShows: (state) => state.filteredShows,
     profile: (state) => state.profile,
     saved: (state) => state.saved,
+    followingShows: (state) => state.followingShows,
     artists: (state) => state.artists,
     topShows: (state) => state.topShows,
     playlists: (state) => state.playlists,

@@ -69,7 +69,7 @@ export async function fetchcasts() {
 
 export const fetchEpisodes = async (showId) => {
   const Id = showId;
-  const url = `https://api.spotify.com/v1/shows/${Id}/episodes`;
+  const url = `https://api.spotify.com/v1/shows/${Id}/episodes?limit=10`;
   try {
     const response = await axios.get(url, {
       headers: {
@@ -102,7 +102,7 @@ export const fetchProfile = async () => {
 };
 
 export const fetchSaved = async () => {
-  const url = "https://api.spotify.com/v1/me/episodes";
+  const url = "https://api.spotify.com/v1/me/episodes?limit=10";
   try {
     const response = await axios.get(url, {
       headers: {
